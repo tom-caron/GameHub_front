@@ -1,4 +1,5 @@
 import { openGamesModule } from './modules/games.js';
+import { openPlatformsModule } from './modules/platforms.js';
 
 async function loadNavbar() {
   const container = document.getElementById('navbarContainer');
@@ -18,7 +19,7 @@ async function loadNavbar() {
 
           // Appelle le module JS correspondant
           if(moduleName === 'games') openGamesModule();
-          // ajouter platforms, genres, etc. ici
+          else if(moduleName === 'platforms') openPlatformsModule();
         });
     });
   });

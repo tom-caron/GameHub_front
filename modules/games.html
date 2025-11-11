@@ -21,33 +21,45 @@
             <label for="gamePlatform" class="form-label">Plateforme</label>
             <select id="gamePlatform" class="form-select" required></select>
         </div>
+        <div class="mt-2 mb-2" id="gameFormMessage"></div>
         <button type="submit" class="btn btn-primary w-100">Enregistrer</button>
       </form>
-      <div class="mt-2 text-danger" id="gameFormMessage"></div>
     </div>
   </div>
 
   <!-- Liste des jeux -->
-  <div class="col-md-6">
-    <div class="card p-4 shadow-sm">
-      <h5 class="card-title">Liste des Jeux</h5>
-        <select id="sortGames" class="form-select w-auto">
-            <option value="">-- tri --</option>
-            <option value="title">Titre A-Z</option>
-            <option value="-title">Titre Z-A</option>
-            <option value="genre.name">Genre (ASC)</option>
-            <option value="-genre.name">Genre (DESC)</option>
-            <option value="platform.name">Plateforme (ASC)</option>
-            <option value="-platform.name">Plateforme (DESC)</option>
-        </select>
-        <ul id="gameList" class="list-group mt-3"></ul>
+    <div class="col-md-6">
+        <div class="card p-4 shadow-sm">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <h5 class="card-title mb-0">Liste des Jeux</h5>
+                <div class="d-flex gap-2">
+                    <select id="sortGames" class="form-select form-select-sm w-auto">
+                        <option value="">-- tri --</option>
+                        <option value="title">Nom A-Z</option>
+                        <option value="-title">Nom Z-A</option>
+                        <option value="genre.name">Genre (ASC)</option>
+                        <option value="-genre.name">Genre (DESC)</option>
+                        <option value="platform.name">Plateforme (ASC)</option>
+                        <option value="-platform.name">Plateforme (DESC)</option>
+                    </select>
+
+                    <select id="limitGames" class="form-select form-select-sm w-auto">
+                        <option value="5">5</option>
+                        <option value="10" selected>10</option>
+                        <option value="15">15</option>
+                        <option value="25">25</option>
+                    </select>
+                </div>
+            </div>
+
+            <ul id="gameList" class="list-group mt-3"></ul>
+        </div>
+
+        <div class="d-flex justify-content-end gap-2 mt-3">
+            <button class="btn btn-primary" id="prevGames"><</button>
+            <button class="btn btn-primary" id="nextGames">></button>
+        </div>
     </div>
-    
-    <div class="d-flex justify-content-end gap-2 mt-3">
-        <button class="btn btn-primary" id="prevGames"><</button>
-        <button class="btn btn-primary" id="nextGames">></button>
-    </div>
-  </div>
 </div>
 
 <style>

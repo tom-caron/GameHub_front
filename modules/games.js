@@ -38,19 +38,26 @@ export async function openGamesModule() {
 
   document.getElementById('sortGames').addEventListener('change', () => {
   loadGames(token, user);
-});
+  });
+
+  document.getElementById('limitGames').addEventListener('change', () => {
+    currentGamePage = 1; // revient à la page 1
+    loadGames(token, user);
+  });
+
 
 }
 
 async function loadGames(token, user) {
   try {
     const sort = document.getElementById('sortGames').value;
-    const url = `${API_BASE}/api/games?page=${currentGamePage}&limit=${gamesPerPage}${sort ? `&sort=${sort}` : ""}`;
-    console.log('Fetching games from URL:', url);
-    const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` }});
+    const limit = parseInt(document.getElementById('limitGames').value, 10) || 10;
+    const url = `${API_BASE}/api/games?page=${currentGamePage}&limit=${limit}${sort ? `&sort=${sort}` : ""}`;
+
+    const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
     const data = await res.json();
-    const games = data.games;
-    const total = data.total;
+    const games = data.games || [];
+    const total = data.total || 0;
 
     const ul = document.getElementById('gameList');
     ul.innerHTML = '';
@@ -60,32 +67,33 @@ async function loadGames(token, user) {
       li.classList.add('list-group-item');
       li.innerHTML = `
         <span>${game.title} (${game.genre.name} - ${game.platform.name})</span>
-
         ${user.role === 'admin' ? `
-        <div class="d-flex gap-2">
-          <button class="btn btn-sm btn-primary" onclick="editGame('${game._id}')">Edit</button>
-          <button class="btn btn-sm btn-danger" onclick="deleteGame('${game._id}')">Del</button>
-        </div>
+          <div class="d-flex gap-2">
+            <button class="btn btn-sm btn-primary" onclick="editGame('${game._id}')">🖉</button>
+            <button class="btn btn-sm btn-danger" onclick="deleteGame('${game._id}')">🗑️</button>
+          </div>
         ` : ''}
       `;
       ul.appendChild(li);
     });
 
     document.getElementById('prevGames').disabled = currentGamePage <= 1;
-    document.getElementById('nextGames').disabled = currentGamePage * gamesPerPage >= total;
+    document.getElementById('nextGames').disabled = currentGamePage * limit >= total;
 
-
-  } catch(err){
+  } catch(err) {
     console.error('Erreur chargement jeux :', err);
   }
 }
 
+
 function setupForm(token, user){
   const form = document.getElementById('gameForm');
+  const messageDiv = document.getElementById('gameFormMessage');
   if (!form) return;
 
   form.addEventListener('submit', async e => {
     e.preventDefault();
+    messageDiv.textContent = '';
 
     const id = document.getElementById('gameId').value;
     const payload = {
@@ -98,18 +106,38 @@ function setupForm(token, user){
     const method = id ? 'PUT' : 'POST';
     const url = id ? `${API_BASE}/api/games/${id}` : `${API_BASE}/api/games`;
 
-    await fetch(url,{
+    try {
+      const res = await fetch(url,{
       method,
       headers:{
         'Content-Type':'application/json',
         Authorization:`Bearer ${token}`
       },
       body:JSON.stringify(payload)
-    });
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        messageDiv.textContent = errorData.message || 'Erreur lors de la création/modification du jeu.';
+        messageDiv.style.color = 'red';
+        return;
+      }
     
     form.reset();
     document.getElementById('gameId').value = '';
-    loadGames(token,user);
+    messageDiv.textContent = '✅ Jeu enregistré avec succès !';
+    messageDiv.style.color = 'limegreen';
+
+      setTimeout(() => {
+        loadGames(token, user);
+        messageDiv.textContent = '';
+      }, 1000);
+
+  } catch (err) {
+      console.error('Erreur envoi formulaire plateforme :', err);
+      messageDiv.textContent = 'Erreur de connexion au serveur.';
+      messageDiv.style.color = 'red';
+  }
   });
 }
 
