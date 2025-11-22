@@ -1,0 +1,110 @@
+<div class="row">
+  <!-- Formulaire d'ajout / modification (admin seulement) -->
+  <div class="col-md-6">
+    <div class="card p-4 mb-4 shadow-sm" id="genreFormCard">
+      <h5 class="card-title">Ajouter / Modifier un genre</h5>
+      <form id="genreForm">
+        <input type="hidden" id="genreId">
+        <div class="mb-3">
+          <label for="genreName" class="form-label">Nom du genre</label>
+          <input type="text" id="genreName" class="form-control" placeholder="Ex: Aventure" required>
+        </div>
+        <div class="mb-3">
+          <label for="genreSlug" class="form-label">Slug du genre</label>
+          <input type="text" id="genreSlug" class="form-control" placeholder="Ex: aventure" required>
+        </div>
+        <div class="mt-2 mb-2" id="genreFormMessage"></div>
+        <button type="submit" class="btn btn-primary w-100">Enregistrer</button>
+      </form>
+      <div class="mt-2 text-danger" id="platformFormMessage"></div>
+    </div>
+  </div>
+
+    <div class="col-md-6">
+        <div class="card p-4 shadow-sm">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <h5 class="card-title mb-0">Liste des Genres</h5>
+                <div class="d-flex gap-2">
+                    <select id="sortGenres" class="form-select form-select-sm w-auto">
+                        <option value="">-- tri --</option>
+                        <option value="name">Nom A-Z</option>
+                        <option value="-name">Nom Z-A</option>
+                    </select>
+
+                    <select id="limitGenres" class="form-select form-select-sm w-auto">
+                    <option value="5">5</option>
+                    <option value="10" selected>10</option>
+                    <option value="15">15</option>
+                    <option value="25">25</option>
+                    </select>
+                </div>
+            </div>
+
+            <ul id="genreList" class="list-group mt-3"></ul>
+        </div>
+
+        <div class="d-flex justify-content-end gap-2 mt-3">
+            <button class="btn btn-primary" id="prevGenres"><</button>
+            <button class="btn btn-primary" id="nextGenres">></button>
+        </div>
+    </div>
+</div>
+
+<style>
+  /* Cards et liste */
+  .card {
+    background-color: #1a1a2e;
+    border: 2px solid #33ccff;
+    color: #eee;
+  }
+
+  .card-title {
+    color: #33ccff;
+    font-weight: 600;
+  }
+
+  input {
+    background-color: #22223b;
+    border: 1px solid #444;
+    color: #eee;
+  }
+  input:focus {
+    border-color: #33ccff;
+    box-shadow: 0 0 5px #33ccff;
+  }
+
+  /* Liste des items */
+  ul.list-group li {
+    background-color: #22223b;
+    border: 1px solid #444;
+    margin-bottom: 0.3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #eee;
+  }
+
+  /* Boutons de CRUD */
+  .btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .btn-primary {
+    background-color: #ff6600;
+    border: none;
+    font-weight: bold;
+  }
+  .btn-primary:hover {
+    background-color: #ff8533;
+  }
+
+  .btn-danger {
+    background-color: #ff4d4d;
+    border: none;
+    font-weight: bold;
+  }
+  .btn-danger:hover {
+    background-color: #ff6666;
+  }
+</style>

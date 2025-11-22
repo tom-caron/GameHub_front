@@ -1,5 +1,6 @@
 import { openGamesModule } from './modules/games.js';
 import { openPlatformsModule } from './modules/platforms.js';
+import { openGenresModule } from './modules/genres.js';
 
 async function loadNavbar() {
   const container = document.getElementById('navbarContainer');
@@ -20,6 +21,7 @@ async function loadNavbar() {
           // Appelle le module JS correspondant
           if(moduleName === 'games') openGamesModule();
           else if(moduleName === 'platforms') openPlatformsModule();
+          else if(moduleName === 'genres') openGenresModule();
         });
     });
   });
