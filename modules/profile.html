@@ -1,0 +1,49 @@
+<section id="profileModule" class="module" style="display:none;">
+  <div class="container mt-4">
+    <h2 class="mb-4">👤 Mon Profil</h2>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card p-4 shadow-sm bg-dark text-light">
+          <h4 class="mb-3">Informations personnelles</h4>
+          <form id="profileForm">
+            <input type="hidden" id="playerId">
+
+            <div class="mb-3">
+              <label for="playerUsername" class="form-label">Nom d'utilisateur</label>
+              <input type="text" id="playerUsername" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="playerEmail" class="form-label">Email</label>
+              <input type="email" id="playerEmail" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="playerPassword" class="form-label">Mot de passe (laisser vide pour ne pas changer)</label>
+              <input type="password" id="playerPassword" class="form-control">
+            </div>
+
+            <div class="mb-3">
+              <label for="playerRole" class="form-label">Rôle</label>
+              <select id="playerRole" class="form-select"></select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Score total</label>
+              <input type="text" id="playerScore" class="form-control" readonly>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Date de création</label>
+              <input type="text" id="playerCreatedAt" class="form-control" readonly>
+            </div>
+
+            <button type="submit" class="btn btn-primary">💾 Enregistrer</button>
+            <div id="profileFormMessage" class="mt-2"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

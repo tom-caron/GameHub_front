@@ -2,6 +2,7 @@ import { openGamesModule } from './modules/games.js';
 import { openPlatformsModule } from './modules/platforms.js';
 import { openGenresModule } from './modules/genres.js';
 import { openStatsModule } from './modules/stats.js';
+import { openProfileModule } from './modules/profile.js'
 
 async function loadNavbar() {
   const container = document.getElementById('navbarContainer');
@@ -24,6 +25,7 @@ async function loadNavbar() {
           else if(moduleName === 'platforms') openPlatformsModule();
           else if(moduleName === 'genres') openGenresModule();
           else if(moduleName === 'stats') openStatsModule();
+          else if(moduleName === 'profile') openProfileModule();
         });
     });
   });
