@@ -1,4 +1,4 @@
-const API_BASE = 'http://localhost:3000';
+const API_BASE = 'https://gamehub-api-imrv.onrender.com';
 
 // Utility: always parse user from localStorage (defensive)
 function getCurrentUser() {

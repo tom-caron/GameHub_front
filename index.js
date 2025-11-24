@@ -77,7 +77,7 @@ async function init() {
     }
 
     try {
-        const res = await fetch(`http://localhost:3000/auth/me`, {
+        const res = await fetch(`https://gamehub-api-imrv.onrender.com/auth/me`, {
             headers: { Authorization: `Bearer ${token}` }
         });
 

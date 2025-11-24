@@ -1,4 +1,4 @@
-const API_BASE = 'http://localhost:3000';
+const API_BASE = 'https://gamehub-api-imrv.onrender.com';
 
 let currentPlatformPage = 1;
 let platformsPerPage = 10; // ✅ par défaut 10

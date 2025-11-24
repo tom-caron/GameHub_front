@@ -1,5 +1,5 @@
 // public/modules/sessions.js
-const API_BASE = 'http://localhost:3000';
+const API_BASE = 'https://gamehub-api-imrv.onrender.com';
 
 let currentSessionPage = 1;
 let sessionsPerPage = 5;
@@ -34,35 +34,33 @@ function formatDuration(seconds) {
 
 // Chargement des joueurs et jeux (options du formulaire)
 // Défensive : si déjà chargés, ne recharge pas.
-async function loadFormOptionsIfNeeded() {
+async function loadFormOptions() {
   const token = getToken();
   if (!token) return;
 
   try {
-    if (!allPlayers.length) {
-      const resP = await fetch(`${API_BASE}/api/players`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      const dp = await resP.json();
-      allPlayers = (dp && dp.players) ? dp.players : [];
-    }
+    // Toujours recharger les joueurs
+    const resP = await fetch(`${API_BASE}/api/players`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    const dp = await resP.json();
+    allPlayers = dp.players || [];
 
-    if (!allGames.length) {
-      const resG = await fetch(`${API_BASE}/api/games`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      const dg = await resG.json();
-      allGames = (dg && dg.games) ? dg.games : [];
-    }
+    // Toujours recharger les jeux
+    const resG = await fetch(`${API_BASE}/api/games`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    const dg = await resG.json();
+    allGames = dg.games || [];
 
-    // Remplir les selects (si présents dans DOM)
+    // Mise à jour <select>
     const playerSelect = document.getElementById('sessionPlayer');
     if (playerSelect) {
       playerSelect.innerHTML = '';
       allPlayers.forEach(p => {
         const opt = document.createElement('option');
         opt.value = p._id;
-        opt.textContent = p.username || p.email || p._id;
+        opt.textContent = p.username || p.email;
         playerSelect.appendChild(opt);
       });
     }
@@ -73,14 +71,15 @@ async function loadFormOptionsIfNeeded() {
       allGames.forEach(g => {
         const opt = document.createElement('option');
         opt.value = g._id;
-        opt.textContent = g.title || g.slug || g._id;
+        opt.textContent = g.title;
         gameSelect.appendChild(opt);
       });
     }
   } catch (err) {
-    console.error('Erreur loadFormOptionsIfNeeded', err);
+    console.error('Erreur loadFormOptions', err);
   }
 }
+
 
 // Ouvre le formulaire d'ajout/édition
 function openSessionForm(session = null) {
@@ -205,7 +204,7 @@ export async function openSessionsModule() {
     // bind single handler
     if (addBtn._handler) addBtn.removeEventListener('click', addBtn._handler);
     const handler = async () => {
-      await loadFormOptionsIfNeeded();
+      await loadFormOptions();
       openSessionForm(null);
     };
     addBtn._handler = handler;
@@ -248,7 +247,7 @@ export async function openSessionsModule() {
   }
 
   // ensure options ready for the form (load once)
-  await loadFormOptionsIfNeeded();
+  await loadFormOptions();
 
   // initial load
   await loadSessions();
@@ -321,7 +320,7 @@ async function loadSessions() {
             });
             const sessData = await sessionRes.json();
             const sessionObj = (sessionRes.ok && sessData.session) ? sessData.session : s;
-            await loadFormOptionsIfNeeded();
+            await loadFormOptions();
             openSessionForm(sessionObj);
           } catch (err) {
             console.error('Erreur récupération session pour édition', err);

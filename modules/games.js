@@ -1,4 +1,4 @@
-const API_BASE = 'http://localhost:3000';
+const API_BASE = 'https://gamehub-api-imrv.onrender.com';
 
 let currentGamePage = 1;
 const gamesPerPage = 5;
