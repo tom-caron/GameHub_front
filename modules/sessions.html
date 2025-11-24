@@ -1,0 +1,93 @@
+<section id="sessionsModule" class="module" style="display:none;">
+  <div class="container mt-4">
+
+    <!-- Titre + bouton ajouter -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="text-info fw-bold">🎮 Sessions</h2>
+      <button id="addSessionBtn" class="btn btn-success px-3 py-2 rounded">➕ Ajouter une session</button>
+    </div>
+
+    <!-- Formulaire ajout / édition -->
+    <div id="sessionFormCard" class="card bg-dark text-light shadow-lg border-info mb-4" style="display:none;">
+      <div class="card-body">
+
+        <h4 id="sessionFormTitle" class="fw-bold mb-3 text-info">Nouvelle session</h4>
+
+        <form id="sessionForm">
+          <input type="hidden" id="sessionId">
+
+          <div class="mb-3">
+            <label for="sessionPlayer" class="form-label">Joueur</label>
+            <select id="sessionPlayer" class="form-select bg-secondary text-light border-info" required></select>
+          </div>
+
+          <div class="mb-3">
+            <label for="sessionGame" class="form-label">Jeu</label>
+            <select id="sessionGame" class="form-select bg-secondary text-light border-info" required></select>
+          </div>
+
+          <div class="mb-3">
+            <label for="sessionScore" class="form-label">Score</label>
+            <input type="number" id="sessionScore" class="form-control bg-secondary text-light border-info" min="0" value="0" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="sessionActive" class="form-label">Active</label>
+            <select id="sessionActive" class="form-select bg-secondary text-light border-info">
+              <option value="true">Oui</option>
+              <option value="false">Non</option>
+            </select>
+          </div>
+
+          <div id="sessionFormMessage" class="mb-3"></div>
+
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary px-4 py-2 rounded">💾 Enregistrer</button>
+            <button type="button" id="cancelSessionBtn" class="btn btn-secondary px-4 py-2 rounded">✖ Annuler</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+    <!-- Options de tri et pagination -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div>
+        <label for="sortSessions" class="form-label me-2 text-light">Trier par :</label>
+        <select id="sortSessions" class="form-select d-inline-block w-auto bg-secondary text-light border-info">
+          <option value="">Aucun</option>
+          <option value="score">Score ↑</option>
+          <option value="-score">Score ↓</option>
+          <option value="createdAt">Date ↑</option>
+          <option value="-createdAt">Date ↓</option>
+          <option value="player.username">Joueur ↑</option>
+          <option value="-player.username">Joueur ↓</option>
+          <option value="game.title">Jeu ↑</option>
+          <option value="-game.title">Jeu ↓</option>
+        </select>
+      </div>
+
+      <div>
+        <button id="prevSessions" class="btn btn-secondary me-2 px-3 py-2 rounded">⬅️ Précédent</button>
+        <button id="nextSessions" class="btn btn-secondary px-3 py-2 rounded">➡️ Suivant</button>
+      </div>
+    </div>
+
+    <!-- Tableau -->
+    <table class="table table-dark table-striped align-middle shadow-sm">
+      <thead class="table-info text-dark">
+        <tr>
+          <th>Joueur</th>
+          <th>Jeu</th>
+          <th>Score</th>
+          <th>Durée</th>
+          <th>Active</th>
+          <th>Créée le</th>
+        </tr>
+      </thead>
+      <tbody id="sessionList"></tbody>
+    </table>
+
+    <div id="sessionsMessage" class="mt-2"></div>
+  </div>
+</section>
